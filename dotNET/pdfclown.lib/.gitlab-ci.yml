@@ -1,0 +1,13 @@
+stages:
+- build_deploy
+build_deploy_job:
+  only:
+    refs:
+    - main
+  stage: build_deploy
+  interruptible: true
+  script:
+  - $version = Get-Date -Format "yy.M.d.HHmm"
+  - dotnet pack --include-symbols /p:Version=$version
+  - dotnet nuget add source "${CI_API_V4_URL}/projects/48/packages/nuget/index.json" --name gitlab-public --username gitlab-ci-token --password ${CI_JOB_TOKEN} --store-password-in-clear-text
+  - dotnet nuget push "bin\Release\*.nupkg" --source gitlab-public

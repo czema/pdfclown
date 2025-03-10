@@ -34,7 +34,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
-using System.Windows.Forms;
 
 namespace org.pdfclown.tools
 {
@@ -186,10 +185,6 @@ namespace org.pdfclown.tools
       PrintDocument printDocument = GetPrintDocument(pages);
       if(!silent)
       {
-        PrintDialog printDialog = new PrintDialog();
-        printDialog.Document = printDocument;
-        if(printDialog.ShowDialog() != DialogResult.OK)
-          return false;
       }
 
       printDocument.Print();
